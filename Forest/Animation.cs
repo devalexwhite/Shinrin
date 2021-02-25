@@ -4,56 +4,45 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Forest
 {
-    public class Animation
+  public class Animation
+  {
+    public SpriteSheet SpriteSheet
     {
-        private SpriteSheet _spriteSheet;
-        private float _speed;
-        private int _curFrame;
-        private int _startFrame;
-        private int _endFrame;
-        private double _start;
-        private bool _paused = false;
-
-        public Animation(SpriteSheet spriteSheet, int startFrame, int endFrame)
-        {
-            _spriteSheet = spriteSheet;
-            _startFrame = startFrame;
-            _endFrame = endFrame;
-        }
-
-        public void Pause()
-        {
-            _paused = true;
-        }
-
-        public void Resume()
-        {
-            _paused = false;
-        }
-
-        public void Play(float speed = 300.0f)
-        {
-            _speed = speed;
-            _paused = false;
-            _curFrame = _startFrame;
-            _start = 0;
-        }
-
-        public void Draw(SpriteBatch spriteBatch, GameTime gameTime, Vector2 destination)
-        {
-            if (_start == 0) _start = gameTime.TotalGameTime.TotalMilliseconds;
-
-            double elapsed = gameTime.TotalGameTime.TotalMilliseconds - _start;
-
-            if (elapsed > _speed && !_paused)
-            {
-                _curFrame++;
-                if (_curFrame > _endFrame) _curFrame = _startFrame;
-
-                _start = gameTime.TotalGameTime.TotalMilliseconds;
-            }
-
-            _spriteSheet.DrawSprite(spriteBatch, destination, _curFrame);
-        }
+      get { return spriteSheet; }
     }
+    SpriteSheet spriteSheet;
+
+    public float FrameTime
+    {
+      get { return frameTime; }
+    }
+    float frameTime;
+
+    public bool ShouldLoop
+    {
+      get { return shouldLoop; }
+    }
+    bool shouldLoop;
+
+    public int StartFrame
+    {
+      get { return startFrame; }
+    }
+    int startFrame;
+
+    public int EndFrame
+    {
+      get { return endFrame; }
+    }
+    int endFrame;
+
+    public Animation(SpriteSheet spriteSheet, int startFrame, int endFrame, float frameTime = 200.0f, bool shouldLoop = true)
+    {
+      this.startFrame = startFrame;
+      this.endFrame = endFrame;
+      this.spriteSheet = spriteSheet;
+      this.frameTime = frameTime;
+      this.shouldLoop = shouldLoop;
+    }
+  }
 }
