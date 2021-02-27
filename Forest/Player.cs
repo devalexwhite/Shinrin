@@ -13,11 +13,8 @@ namespace Forest
     public const int Width = 32;
     public const int Height = 32;
 
-    private float Velocity = 0.0f;
-    private const float Acceleration = 20.0f;
-    private const float TopSpeed = 80.0f;
+    private const float Speed = 80.0f;
     private Vector2 movement;
-    private Texture2D Texture;
 
     Animation walkingUp, walkingRight, walkingDown, walkingLeft;
     AnimationPlayer animationPlayer;
@@ -34,43 +31,39 @@ namespace Forest
       float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
       movement = new Vector2(0, 0);
 
+      Animation toPlay = walkingUp;
+
       if (keyboardState.IsKeyDown(Keys.W))
       {
         movement.Y = -1;
-        animationPlayer.Play(walkingUp);
+        toPlay = walkingUp;
       }
       else if (keyboardState.IsKeyDown(Keys.S))
       {
         movement.Y = 1;
-        animationPlayer.Play(walkingDown);
+        toPlay = walkingDown;
       }
 
-      else if (keyboardState.IsKeyDown(Keys.A))
+      if (keyboardState.IsKeyDown(Keys.A))
       {
         movement.X = -1;
-        animationPlayer.Play(walkingLeft);
+        toPlay = walkingLeft;
       }
       else if (keyboardState.IsKeyDown(Keys.D))
       {
         movement.X = 1;
-        animationPlayer.Play(walkingRight);
-      }
-      else
-      {
-        animationPlayer.Pause();
+        toPlay = walkingRight;
       }
 
       if (!keyboardState.IsKeyDown(Keys.W) && !keyboardState.IsKeyDown(Keys.S) && !keyboardState.IsKeyDown(Keys.D) && !keyboardState.IsKeyDown(Keys.A))
       {
-        Velocity = 0;
+        animationPlayer.Pause();
       }
-      else
-      {
-        Velocity = Math.Clamp(Acceleration + Velocity, 0, TopSpeed);
-      }
+      else animationPlayer.Play(toPlay);
 
-      Position.X += Velocity * movement.X * elapsed;
-      Position.Y += Velocity * movement.Y * elapsed;
+
+      Position.X += Speed * movement.X * elapsed;
+      Position.Y += Speed * movement.Y * elapsed;
 
     }
 
