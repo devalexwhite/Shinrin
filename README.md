@@ -1,6 +1,6 @@
 ![Shinrin logo](logo.png)
 
-# Shinrin
+# Summary
 
 Shinrin is a "walking simulator" style game based in the forests of Japan. Follow the paths to explore deeper into the forest. Discover fellow hikers, new creatures, shrines and beautiful scenery. Setup a basecamp and decorate with your discoveries.
 
